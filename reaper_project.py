@@ -48,6 +48,8 @@ class ReaperProject:
                     head.depth = inner_level - 1
                     print(head)
                 
+                    # process line (header parameters) according to node.type
+                
             elif re.search(end_block_r, line):
                 el_tag = stack.pop()
                 inner_level -= 1
@@ -64,7 +66,7 @@ class ReaperProject:
                     
                     head.inner.append(curr)
                     # print("HEAD M/: {}, CURR M/: {}".format(head.max_depth, curr.max_depth))
-                    head.max_depth = max(head.max_depth, curr.max_depth)
+                    # head.max_depth = max(head.max_depth, curr.max_depth)
                     # if prev:
                         # prev.max_depth = max(prev.max_depth, head.max_depth + 1)
                     
@@ -75,14 +77,18 @@ class ReaperProject:
                 print("Level: {} :: <{}>, {} to {}".format(
                     inner_level+1, el_tag, index_map[el_tag], line_idx
                 ))
-            # else:
-                # we're inside the block
-                # if node_type_name == 'NOTES':
-                #     notes_block.parameters.append(line)
+            else:
+                # process line according to node.type
+                
+                if head.type == NodeType['NOTES']:
+                    head.parameters.append(line)
         
         print(head)
+        print("".join(head.parameters))
         for n in head.inner:
             print(n)
+            print("".join(n.parameters))
             for n_2 in n.inner:
                 print(n_2)
+                print("".join(n_2.parameters))
     
