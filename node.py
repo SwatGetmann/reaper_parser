@@ -3,14 +3,14 @@ from node_type import NodeType
 class Node:
     def __init__(self, type: NodeType) -> None:
         self.type = type
-        self.inner_elements = [] # list of Nodes
-        self.parameters = [] # list of Parameters
+        self.inner = []         # list of Nodes
+        self.prev = None
+        self.parameters = []    # list of Parameters
+        self.depth = 0          # 0 = head, maximal value = distance of leaf
+        # self.max_depth = 0
     
-    def __str__(self) -> str:
-        type_str = "> TYPE: {}".format(self.type)
-        parameters_str = "> PARAMS: {}".format(self.parameters)
-        inner_elements_str = "> * -- {}".format(self.inner_elements)
-        
-        return "\n".join([type_str, parameters_str, inner_elements_str])
-        
+    def __str__(self) -> str:       
+        return "{} -> {}.[{} /{}]".format(self.prev, self.type, len(self.inner), self.depth)
+
+
         
