@@ -46,7 +46,6 @@ class ReaperProject:
                     head = Node(type=NodeType[node_type_name])
                     head.prev = prev
                     head.depth = inner_level - 1
-                    print(head)
                 
                     # process line (header parameters) according to node.type
                 
@@ -65,10 +64,6 @@ class ReaperProject:
                     prev = head.prev
                     
                     head.inner.append(curr)
-                    # print("HEAD M/: {}, CURR M/: {}".format(head.max_depth, curr.max_depth))
-                    # head.max_depth = max(head.max_depth, curr.max_depth)
-                    # if prev:
-                        # prev.max_depth = max(prev.max_depth, head.max_depth + 1)
                     
                     node_type_name = stack[-1]
 
