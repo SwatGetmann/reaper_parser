@@ -25,4 +25,5 @@ class NodeType(Enum):
     SLOT = 22
     BR_CURSOR_POS = 23
     PANENV = 24
+    JS = 25
     # list os not full. more will be coming soon
