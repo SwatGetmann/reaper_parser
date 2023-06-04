@@ -1,6 +1,7 @@
 import re
 
 from node import Node, NodeType
+from parameter import Parameter, ParameterType
 
 class ReaperProject:
     """
@@ -12,19 +13,28 @@ class ReaperProject:
        self.parse()
     
     def parse(self) -> None:
-        lines = open(self.filepath).readlines()
+        with open(self.filepath) as f:  
+            lines = f.readlines()
+        
+        # !TODO: Index Map - what is it for? \
+        # * What are the use cases?
+        # * Are we planning to use it somehow?
         index_map = {}
+        
         stack = []
         
         open_block_r = r"\s*<([A-Z_]+)"
         end_block_r = r"^\s*\>\n"
         
-        node_type_name = None
-        
-        # notes_block = Node(type=NodeType.NOTES)
-        
+        node_token = None
+                
         head = Node(type=NodeType.REAPER_PROJECT)
         prev = None
+        
+        # TODO! : handle multiline parameters
+        multiline_flag = False
+        # multiline_param_start_idx = 0
+        single_line_param_r = r"\s+([A-Z0-9_]+)\s+"
         
         for line_idx, line in enumerate(lines):
             if re.match(open_block_r, line):
@@ -33,9 +43,9 @@ class ReaperProject:
                 # print(line)
                 # print(match)
                 
-                node_type_name = match.group(1)
-                stack.append(node_type_name)
-                index_map[node_type_name] = line_idx
+                node_token = match.group(1)
+                stack.append(node_token)
+                index_map[node_token] = line_idx
                 
                 inner_level = len(stack)
                 
@@ -43,7 +53,7 @@ class ReaperProject:
                 
                 if inner_level > 1:
                     prev = head
-                    head = Node(type=NodeType[node_type_name])
+                    head = Node(type=NodeType[node_token])
                     head.prev = prev
                     head.depth = inner_level - 1
                 
@@ -56,34 +66,53 @@ class ReaperProject:
                 # print("Closing block, inner level: {}".format(inner_level))
                 # print(inner_level)
                 
+                if text_param and multiline_flag:
+                    head.parameters.append(text_param)
+                    text_param = None
+                    multiline_flag = False
+                
                 if inner_level > 0:
                     curr = head
-                    curr.max_depth = inner_level
-                    
                     head = head.prev
                     prev = head.prev
                     
                     head.inner.append(curr)
                     
-                    node_type_name = stack[-1]
+                    node_token = stack[-1]
 
                 # print(head)
                     
                 print("Level: {} :: <{}>, {} to {}".format(
                     inner_level+1, el_tag, index_map[el_tag], line_idx
                 ))
-            else:
-                # process line according to node.type
+            elif re.search(single_line_param_r, line):
+                multiline_flag = False
+                param_match = re.search(single_line_param_r, line)
+                param_type = param_match.group(1)
+                print("[Line {}] :: Param Type Found: {}".format(line_idx, param_type))
+                # text_param = Parameter(type=ParameterType[param_type])
+                text_param = Parameter(type=ParameterType.TEXT) # for test
+                text_param.values.append(line)
                 
-                if head.type == NodeType['NOTES']:
-                    head.parameters.append(line)
-        
+                head.parameters.append(text_param)
+            else:
+                if multiline_flag == False:
+                    multiline_flag = True
+                    # multiline_param_start_idx = line_idx
+                    text_param = Parameter(type=ParameterType.TEXT)
+                if text_param and multiline_flag:
+                    text_param.values.append(line)
+                    
+        self.print_node_tree(head)
+    
+    def print_node_tree(self, head: Node):
         print(head)
-        print("".join(head.parameters))
+        for p in head.parameters:
+            print(p)
         for n in head.inner:
             print(n)
-            print("".join(n.parameters))
+            for p in n.parameters:
+                print(p)
             for n_2 in n.inner:
                 print(n_2)
-                print("".join(n_2.parameters))
-    
+                print(n_2.parameters)
