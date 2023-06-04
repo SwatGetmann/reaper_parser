@@ -10,8 +10,4 @@ class Node:
     
     def __str__(self) -> str:       
         return "{} -> {}.[{} /{}]".format(self.prev, self.type, len(self.inner), self.depth)
-
-        # return "{} -> {}.[{} /{}]".format(self.prev, self.type, len(self.inner), self.depth)
-
-
         
