@@ -1,11 +1,15 @@
 from reaper_project import ReaperProject 
-        
 
-if __name__ == '__main__':
+import datetime
+
+import sys
+
+if __name__ == '__main__': 
     print("Welcome to Reaper Parser.")
     
-    # test_reaper_project_fpath = "d:\\05 Music Lab\\Вдохновения\\Tbilisi Acoustic G\\221012 01 Tbilisi Sunrise\\221012 01 Zoom Rec Again.rpp"
-    test_reaper_project_fpath = "d:\\05 Music Lab\\Вдохновения\\Tbilisi Acoustic G\\230503 three ideas\\230503 three ideas.rpp"
-    # test_reaper_project_fpath = "D:\\05 Music Lab\Вдохновения\\Tbilisi Acoustic G\\221023 02 Athmos\\221023 02 xz.rpp"
-        
-    ReaperProject(test_reaper_project_fpath)
+    print(sys.argv)
+    
+    if len(sys.argv) > 1 and sys.argv[1]:
+        rpp_path = sys.argv[1]
+        print("Processing file: ... {}".format(rpp_path))
+        ReaperProject(rpp_path)
