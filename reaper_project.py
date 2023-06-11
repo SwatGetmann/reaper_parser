@@ -33,7 +33,6 @@ class ReaperProject:
         
         # TODO! : handle multiline parameters
         multiline_flag = False
-        # multiline_param_start_idx = 0
         single_line_param_r = r"\s+([A-Z0-9_]+)\s+"
         
         for line_idx, line in enumerate(lines):
@@ -85,8 +84,8 @@ class ReaperProject:
                 print("Level: {} :: <{}>, {} to {}".format(
                     inner_level+1, el_tag, index_map[el_tag], line_idx
                 ))
-            elif re.search(single_line_param_r, line):
-                multiline_flag = False
+            elif multiline_flag == False and re.search(single_line_param_r, line):
+                # multiline_flag = False
                 param_match = re.search(single_line_param_r, line)
                 param_type = param_match.group(1)
                 print("[Line {}] :: Param Type Found: {}".format(line_idx, param_type))
@@ -98,14 +97,13 @@ class ReaperProject:
             else:
                 if multiline_flag == False:
                     multiline_flag = True
-                    # multiline_param_start_idx = line_idx
                     text_param = Parameter(type=ParameterType.TEXT)
                 if text_param and multiline_flag:
                     text_param.values.append(line)
                     
         self.print_node_tree(head)
     
-    def print_node_tree(self, head: Node):
+    def print_node_tree(self, head: Node) -> None:
         print(head)
         for p in head.parameters:
             print(p)
