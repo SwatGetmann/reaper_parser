@@ -13,6 +13,8 @@ class ReaperProject:
        self.parse()
     
     def parse(self) -> None:
+        print("Processing file: ... {}".format(self.filepath))
+        
         with open(self.filepath) as f:  
             lines = f.readlines()
         
