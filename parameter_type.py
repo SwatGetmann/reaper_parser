@@ -161,4 +161,7 @@ class ParameterType(Enum):
     IGNTEMPO = auto()
     SRCCOLOR = auto()
     
+    # SWSCOLOR
+    SWSCOLOR_ID = auto()
+    
     # list is not full. more will be coming soon

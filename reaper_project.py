@@ -36,6 +36,7 @@ class ReaperProject:
         # TODO! : handle multiline parameters
         multiline_flag = False
         single_line_param_r = r"\s+([A-Z0-9_]+)\s+"
+        uuid_line_param_r = r"\s+(\{{1}[A-F0-9-]+\}{1})\s+"
         
         for line_idx, line in enumerate(lines):
             if re.match(open_block_r, line):
@@ -67,9 +68,9 @@ class ReaperProject:
                 # print("Closing block, inner level: {}".format(inner_level))
                 # print(inner_level)
                 
-                if text_param and multiline_flag:
-                    head.parameters.append(text_param)
-                    text_param = None
+                if param and multiline_flag:
+                    head.parameters.append(param)
+                    param = None
                     multiline_flag = False
                 
                 if inner_level > 0:
@@ -87,21 +88,33 @@ class ReaperProject:
                     inner_level+1, el_tag, index_map[el_tag], line_idx
                 ))
             elif multiline_flag == False and re.search(single_line_param_r, line):
-                # multiline_flag = False
-                param_match = re.search(single_line_param_r, line)
-                param_type = param_match.group(1)
-                print("[Line {}] :: Param Type Found: {}".format(line_idx, param_type))
-                text_param = Parameter(type=ParameterType[param_type])
-                # text_param = Parameter(type=ParameterType.TEXT) # for test
-                text_param.values.append(line)
-                
-                head.parameters.append(text_param)
+                if node_token == 'SWSAUTOCOLOR':
+                    print("PEEEP!")
+                    print(line)
+                    param_match = re.search(uuid_line_param_r, line)
+                    id = param_match.group(1)
+                    print("[Line {}] :: Param Type Found: {}".format(line_idx, id))                
+                    param = Parameter(type=ParameterType.SWSCOLOR_ID)
+                    # param = Parameter(type=ParameterType.TEXT) # for test
+                    param.values.append({'ID': id})
+                    param.values.append(line)
+                    
+                    head.parameters.append(param)
+                else:
+                    # multiline_flag = False
+                    param_match = re.search(single_line_param_r, line)
+                    param_type = param_match.group(1)
+                    print("[Line {}] :: Param Type Found: {}".format(line_idx, param_type))                
+                    param = Parameter(type=ParameterType[param_type])
+                    # param = Parameter(type=ParameterType.TEXT) # for test
+                    param.values.append(line)
+                    head.parameters.append(param)
             else:
                 if multiline_flag == False:
                     multiline_flag = True
-                    text_param = Parameter(type=ParameterType.TEXT)
-                if text_param and multiline_flag:
-                    text_param.values.append(line)
+                    param = Parameter(type=ParameterType.TEXT)
+                if param and multiline_flag:
+                    param.values.append(line)
                     
         self.print_node_tree(head)
     
