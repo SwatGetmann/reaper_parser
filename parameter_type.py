@@ -1,117 +1,164 @@
-from enum import Enum
+from enum import Enum, unique, auto
 
+@unique
 class ParameterType(Enum):
-    TEXT = 1
+    
+    TEXT = auto()
     
     # Project
-    RIPPLE = 2
-    GROUPOVERRIDE = 3
-    AUTOXFADE = 4
-    ENVATTACH = 5
-    POOLEDENVATTACH = 6
-    MIXERUIFLAGS = 7
-    PEAKGAIN = 8
-    FEEDBACK = 9
-    PANLAW = 10
-    PROJOFFS = 11
-    MAXPROJLEN = 12
-    GRID = 13
-    TIMEMODE = 14
-    VIDEO_CONFIG = 15
-    PANMODE = 16
-    CURSOR = 17
-    ZOOM = 18
-    VZOOMEX = 19
-    USE_REC_CFG = 20
-    RECMODE = 21
-    SMPTESYNC = 22
-    LOOP = 23
-    LOOPGRAN = 24
-    RECORD_PATH = 25
-    RENDER_FILE = 26
-    RENDER_FMT = 27
-    RENDER_1X = 28
-    RENDER_RANGE = 29
-    RENDER_RESAMPLE = 30
-    RENDER_ADDTOPROJ = 31
-    RENDER_STEMS = 32
-    RENDER_DITHER = 33
-    TIMELOCKMODE = 34
-    TEMPOENVLOCKMODE = 35
-    ITEMMIX = 36
-    DEFPITCHMODE = 37
-    TAKELANE = 38
-    SAMPLERATE = 39
-    LOCK = 40
+    RIPPLE = auto()
+    GROUPOVERRIDE = auto()
+    AUTOXFADE = auto()
+    ENVATTACH = auto()
+    POOLEDENVATTACH = auto()
+    MIXERUIFLAGS = auto()
+    PEAKGAIN = auto()
+    FEEDBACK = auto()
+    PANLAW = auto()
+    PROJOFFS = auto()
+    MAXPROJLEN = auto()
+    GRID = auto()
+    TIMEMODE = auto()
+    VIDEO_CONFIG = auto()
+    PANMODE = auto()
+    CURSOR = auto()
+    ZOOM = auto()
+    VZOOMEX = auto()
+    USE_REC_CFG = auto()
+    RECMODE = auto()
+    SMPTESYNC = auto()
+    LOOP = auto()
+    LOOPGRAN = auto()
+    RECORD_PATH = auto()
     
-    GLOBAL_AUTO = 41
-    TEMPO = 42
-    PLAYRATE = 43
-    SELECTION = 44
-    SELECTION2 = 45
-    MASTERAUTOMODE = 46
-    MASTERTRACKHEIGHT = 47
-    MASTERPEAKCOL = 48
-    MASTERMUTESOLO = 49
-    MASTERTRACKVIEW = 50
-    MASTERHWOUT = 51
-    MASTER_NCH = 52
-    MASTER_VOLUME = 53
-    MASTER_FX = 54
-    MASTER_SEL = 55
-    MARKER = 56
+    RENDER_FILE = auto()
+    RENDER_FMT = auto()
+    RENDER_1X = auto()
+    RENDER_RANGE = auto()
+    RENDER_RESAMPLE = auto()
+    RENDER_ADDTOPROJ = auto()
+    RENDER_STEMS = auto()
+    RENDER_DITHER = auto()
+    RENDER_PATTERN = auto()
+    
+    TIMELOCKMODE = auto()
+    TEMPOENVLOCKMODE = auto()
+    ITEMMIX = auto()
+    DEFPITCHMODE = auto()
+    TAKELANE = auto()
+    SAMPLERATE = auto()
+    LOCK = auto()
+    
+    GLOBAL_AUTO = auto()
+    TEMPO = auto()
+    PLAYRATE = auto()
+    SELECTION = auto()
+    SELECTION2 = auto()
+    MASTERAUTOMODE = auto()
+    MASTERTRACKHEIGHT = auto()
+    MASTERPEAKCOL = auto()
+    MASTERMUTESOLO = auto()
+    MASTERTRACKVIEW = auto()
+    MASTERHWOUT = auto()
+    MASTER_NCH = auto()
+    MASTER_VOLUME = auto()
+    MASTER_FX = auto()
+    MASTER_SEL = auto()
+    MARKER = auto()
+    
+    # ScreenSet
+    POS = auto()
+    MASK = auto()
+    CURSORPOS = auto()
+    SCROLLX = auto()
+    SCROLLY = auto()
+    TRACKSCALE = auto()
+    VZOOM = auto()
     
     # Metronome
-    VOL = 57
-    FREQ = 58
-    BEATLEN = 59
-    SAMPLES = 60
-    PATTERN = 61
+    VOL = auto()
+    FREQ = auto()
+    BEATLEN = auto()
+    SAMPLES = auto()
+    PATTERN = auto()
     
     # Masterfxlist
-    WNDRECT = 62
-    SHOW = 63
-    LASTSEL = 64
-    DOCKED = 65
+    WNDRECT = auto()
+    SHOW = auto()
+    LASTSEL = auto()
+    DOCKED = auto()
     
     # POOLEDENV
-    ID = 66
-    NAME = 67
-    SRCLEN = 68
-    LFO = 69
-    PPT = 70
+    ID = auto()
+    NAME = auto()
+    SRCLEN = auto()
+    LFO = auto()
+    PPT = auto()
     
     # MASTERPLAYSPEEDENV
-    EGUID = 71
-    ACT = 72
-    VIS = 73
-    LANEHEIGHT = 74
-    ARM = 75
-    DEFSHAPE = 76
+    EGUID = auto()
+    ACT = auto()
+    VIS = auto()
+    LANEHEIGHT = auto()
+    ARM = auto()
+    DEFSHAPE = auto()
     
     # TRACK
     # NAME - 67
-    PEAKCOL = 77
-    BEAT = 78
-    AUTOMODE = 79
-    VOLPAN = 80
-    MUTESOLO = 81
-    IPHASE = 82
-    PLAYOFFS = 83
-    ISBUS = 84
-    BUSCOMP = 85
-    SHOWINMIX = 86
-    FREEMODE = 87
-    SEL = 88
-    REC = 89
-    VU = 90
-    TRACKHEIGHT = 91
-    INQ = 92
-    NCHAN = 93
-    FX = 94
-    TRACKID = 95
-    PERF = 96
-    MIDIOUT = 97
-    MAINSEND = 98
+    PEAKCOL = auto()
+    BEAT = auto()
+    AUTOMODE = auto()
+    VOLPAN = auto()
+    MUTESOLO = auto()
+    IPHASE = auto()
+    PLAYOFFS = auto()
+    ISBUS = auto()
+    BUSCOMP = auto()
+    SHOWINMIX = auto()
+    FREEMODE = auto()
+    SEL = auto()
+    REC = auto()
+    VU = auto()
+    TRACKHEIGHT = auto()
+    INQ = auto()
+    NCHAN = auto()
+    FX = auto()
+    TRACKID = auto()
+    PERF = auto()
+    MIDIOUT = auto()
+    MAINSEND = auto()
+    
+    # FX Chain
+    BYPASS = auto()
+    PRESETNAME = auto()
+    
+    # VST
+    FLOATPOS = auto()
+    FXID = auto()
+    WAK = auto()
+    
+    # ITEM
+    POSITION = auto()
+    SNAPOFFS = auto()
+    LENGTH = auto()
+    ALLTAKES = auto()
+    FADEIN = auto()
+    FADEOUT = auto()
+    MUTE = auto()
+    IGUID = auto()
+    IID = auto()
+    SOFFS = auto()
+    CHANMODE = auto()
+    GUID = auto()
+    RECPASS = auto()
+    
+    # MIDI
+    HASDATA = auto()
+    CCINTERP = auto()
+    POOLEDEVTS = auto()
+    E = auto()
+    CHASE_CC_TAKEOFFS = auto()
+    IGNTEMPO = auto()
+    SRCCOLOR = auto()
     
     # list is not full. more will be coming soon

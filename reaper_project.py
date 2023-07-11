@@ -91,8 +91,8 @@ class ReaperProject:
                 param_match = re.search(single_line_param_r, line)
                 param_type = param_match.group(1)
                 print("[Line {}] :: Param Type Found: {}".format(line_idx, param_type))
-                # text_param = Parameter(type=ParameterType[param_type])
-                text_param = Parameter(type=ParameterType.TEXT) # for test
+                text_param = Parameter(type=ParameterType[param_type])
+                # text_param = Parameter(type=ParameterType.TEXT) # for test
                 text_param.values.append(line)
                 
                 head.parameters.append(text_param)
