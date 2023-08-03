@@ -11,12 +11,14 @@ class ReaperProject:
 
     def __init__(self, filepath: str) -> None:
         self.filepath = filepath
-        self.parse()
+        self.head = self.parse()
+        self.head.print_tree()
+
 
     def parse(self) -> None:
         print("Processing file: ... {}".format(self.filepath))
 
-        with open(self.filepath) as f:  
+        with open(self.filepath) as f:
             lines = f.readlines()
 
         # !TODO: Index Map - what is it for? \
@@ -88,33 +90,47 @@ class ReaperProject:
                 print("Level: {} :: <{}>, {} to {}".format(
                     inner_level+1, el_tag, index_map[el_tag], line_idx
                 ))
-            elif multiline_flag == False and re.search(single_line_param_r, line):
+            elif not multiline_flag and re.search(single_line_param_r, line):
                 if node_token == 'SWSAUTOCOLOR':
                     print("PEEEP!")
                     print(line)
-                    param_match = re.search(uuid_line_param_r, line)
-                    id = param_match.group(1)
-                    print("[Line {}] :: Param Type Found: {}".format(line_idx, id))                
-                    param = Parameter(type=ParameterType.SWSCOLOR_ID)
-                    # param = Parameter(type=ParameterType.TEXT) # for test
-                    param.values.append({'ID': id})
-                    param.values.append(line)
-
+                    get_param = single_line_create_param(
+                        line, 
+                        line_idx, 
+                        uuid_line_param_r,
+                        ParameterType.SWSCOLOR_ID
+                    )
+                    param = get_param(lambda p, m: p.values.append({'ID': m}))
                     head.parameters.append(param)
                 else:
-                    # multiline_flag = False
-                    param_match = re.search(single_line_param_r, line)
-                    param_type = param_match.group(1)
-                    print("[Line {}] :: Param Type Found: {}".format(line_idx, param_type))                
-                    param = Parameter(type=ParameterType[param_type])
-                    # param = Parameter(type=ParameterType.TEXT) # for test
-                    param.values.append(line)
+                    get_param = single_line_create_param(
+                        line, 
+                        line_idx, 
+                        single_line_param_r
+                    )
+                    param = get_param()
                     head.parameters.append(param)
             else:
-                if multiline_flag == False:
+                if not multiline_flag:
                     multiline_flag = True
                     param = Parameter(type=ParameterType.TEXT)
                 if param and multiline_flag:
                     param.values.append(line)
 
-        head.print_tree()
+        return head
+
+
+def single_line_create_param(line, line_idx, regexp, type_override=None):
+    def create_param(append=None):
+        match = re.search(regexp, line)
+        match_res = match.group(1)
+        print("[Line {}] :: Param Type Found: {}".format(line_idx, match_res))
+        if type_override:
+            param = Parameter(type=type_override)
+        else:
+            param = Parameter(type=ParameterType[match_res])
+        if append:
+            append(param, match_res)
+        param.values.append(line)
+        return param
+    return create_param
