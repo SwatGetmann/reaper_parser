@@ -125,13 +125,4 @@ class ReaperProject:
         Args:
             head (Node): a node to print (sub-)tree from
         """
-        print(head)
-        for p in head.parameters:
-            print(p)
-        for n in head.inner:
-            print(n)
-            for p in n.parameters:
-                print(p)
-            for n_2 in n.inner:
-                print(n_2)
-                print(n_2.parameters)
+        head.print_tree()
