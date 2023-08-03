@@ -20,9 +20,4 @@ class Node:
         for p in self.parameters:
             print(p)
         for n in self.inner:
-            print(n)
-            for p in n.parameters:
-                print(p)
-            for n_2 in n.inner:
-                print(n_2)
-                print(n_2.parameters)
+            n.print_tree()
