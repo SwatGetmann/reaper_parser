@@ -1,29 +1,35 @@
-from enum import Enum
+from enum import Enum, auto
+
 
 class NodeType(Enum):
-    REAPER_PROJECT = 1
-    NOTES = 2
-    RECORD_CFG = 3
-    APPLYFX_CFG = 4
-    RENDER_CFG = 5
-    METRONOME = 6
-    MASTERFXLIST = 7
-    POOLEDENV = 8
-    MASTERPLAYSPEEDENV = 9
-    TEMPOENVEX = 10
-    SCREENSET = 11
-    SET = 12
-    PROJBAY = 13
-    TRACK = 14
-    FXCHAIN = 15
-    VST = 16
-    ITEM = 17
-    SOURCE = 18
-    EXTENSIONS = 19
-    SWSAUTOCOLOR = 20
-    SELTRACKITEMSELSTATE = 21
-    SLOT = 22
-    BR_CURSOR_POS = 23
-    PANENV = 24
-    JS = 25
-    # list os not full. more will be coming soon
+    """Class represents type of Node from Reaper Project tree.
+    Basically, it's a Enum.
+    """
+
+    REAPER_PROJECT = auto()
+    NOTES = auto()
+    RECORD_CFG = auto()
+    APPLYFX_CFG = auto()
+    RENDER_CFG = auto()
+    METRONOME = auto()
+    MASTERFXLIST = auto()
+    POOLEDENV = auto()
+    MASTERPLAYSPEEDENV = auto()
+    TEMPOENVEX = auto()
+    SCREENSET = auto()
+    SET = auto()
+    PROJBAY = auto()
+    TRACK = auto()
+    FXCHAIN = auto()
+    VST = auto()
+    ITEM = auto()
+    SOURCE = auto()
+    EXTENSIONS = auto()
+    SWSAUTOCOLOR = auto()
+    SELTRACKITEMSELSTATE = auto()
+    SLOT = auto()
+    BR_CURSOR_POS = auto()
+    PANENV = auto()
+    JS = auto()
+
+    # list is not full. more will be coming soon
