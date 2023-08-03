@@ -31,7 +31,7 @@ class ReaperProject:
         
         node_token = None
                 
-        head = Node(type=NodeType.REAPER_PROJECT)
+        head = Node(ntype=NodeType.REAPER_PROJECT)
         prev = None
         
         # TODO! : handle multiline parameters
@@ -56,7 +56,7 @@ class ReaperProject:
                 
                 if inner_level > 1:
                     prev = head
-                    head = Node(type=NodeType[node_token])
+                    head = Node(ntype=NodeType[node_token])
                     head.prev = prev
                     head.depth = inner_level - 1
                 
