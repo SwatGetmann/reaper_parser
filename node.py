@@ -2,10 +2,10 @@ from node_type import NodeType
 
 
 class Node:
-    """Class represents a Node from a Reaper Project File tree.
-    """
-    def __init__(self, type: NodeType) -> None:
-        self.type = type
+    """Class represents a Node from a Reaper Project File tree."""
+
+    def __init__(self, ntype: NodeType) -> None:
+        self.type = ntype
         self.inner = []         # list of Nodes
         self.prev = None
         self.parameters = []    # list of Parameters
