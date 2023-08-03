@@ -3,6 +3,7 @@ import re
 from node import Node, NodeType
 from parameter import Parameter, ParameterType
 
+
 class ReaperProject:
     """
     Parser for *.rpp Reaper Project files.
@@ -119,6 +120,11 @@ class ReaperProject:
         self.print_node_tree(head)
     
     def print_node_tree(self, head: Node) -> None:
+        """Prints node tree, from a given head
+
+        Args:
+            head (Node): a node to print (sub-)tree from
+        """
         print(head)
         for p in head.parameters:
             print(p)
