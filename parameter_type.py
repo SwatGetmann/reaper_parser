@@ -102,6 +102,8 @@ class ParameterType(Enum):
     LANEHEIGHT = auto()
     ARM = auto()
     DEFSHAPE = auto()
+    POOLEDENVINST = auto()
+    PT = auto()
     
     # TRACK
     # NAME - 67
@@ -127,6 +129,7 @@ class ParameterType(Enum):
     PERF = auto()
     MIDIOUT = auto()
     MAINSEND = auto()
+    FILE = auto()
     
     # FX Chain
     BYPASS = auto()
@@ -160,6 +163,7 @@ class ParameterType(Enum):
     CHASE_CC_TAKEOFFS = auto()
     IGNTEMPO = auto()
     SRCCOLOR = auto()
+    VELLANE = auto()
     
     # SWSCOLOR
     SWSCOLOR_ID = auto()
