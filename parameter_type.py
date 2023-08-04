@@ -160,10 +160,16 @@ class ParameterType(Enum):
     CCINTERP = auto()
     POOLEDEVTS = auto()
     E = auto()
+    e = auto()
     CHASE_CC_TAKEOFFS = auto()
     IGNTEMPO = auto()
     SRCCOLOR = auto()
     VELLANE = auto()
+    CFGEDITVIEW = auto()
+    KEYSNAP = auto()
+    TRACKSEL = auto()
+    EVTFILTER = auto()
+    CFGEDIT = auto()
     
     # SWSCOLOR
     SWSCOLOR_ID = auto()

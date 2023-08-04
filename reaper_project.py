@@ -12,7 +12,7 @@ class ReaperProject:
     BLOCK_OPEN_RGX = r"\s*<([A-Z_]+)"
     BLOCK_END_RGX = r"^\s*\>\n"
 
-    PARAM_LINE_SINGLE_RGX = r"\s+([A-Z0-9_]+)\s+"
+    PARAM_LINE_SINGLE_RGX = r"\s+([A-Ze0-9_]+)\s+"
     PARAM_LINE_UUID_RGX = r"\s+(\{{1}[A-F0-9-]+\}{1})\s+"
 
     def __init__(self, filepath: str) -> None:
