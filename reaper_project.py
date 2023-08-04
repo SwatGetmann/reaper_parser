@@ -49,16 +49,11 @@ class ReaperProject:
                 if re.match(self.BLOCK_OPEN_RGX, line):
                     match = re.search(self.BLOCK_OPEN_RGX, line)
 
-                    # print(line)
-                    # print(match)
-
                     node_token = match.group(1)
                     stack.append(node_token)
                     index_map[node_token] = line_idx
 
                     inner_level = len(stack)
-
-                    # print(inner_level)
 
                     if inner_level > 1:
                         prev = head
@@ -71,9 +66,6 @@ class ReaperProject:
                 elif re.search(self.BLOCK_END_RGX, line):
                     el_tag = stack.pop()
                     inner_level -= 1
-
-                    # print("Closing block, inner level: {}".format(inner_level))
-                    # print(inner_level)
 
                     if param and multiline_flag:
                         head.parameters.append(param)
@@ -88,8 +80,6 @@ class ReaperProject:
                         head.inner.append(curr)
 
                         node_token = stack[-1]
-
-                    # print(head)
 
                     level_log_msg = f"L {inner_level+1} :: <{el_tag}>, {index_map[el_tag]} to {line_idx}"
                     print(level_log_msg)
