@@ -37,6 +37,7 @@ class ReaperProject:
         stack = []
 
         node_token = None
+        param = None
 
         head = Node(ntype=NodeType.REAPER_PROJECT)
         prev = None
