@@ -16,6 +16,15 @@ class ReaperProject:
 
 
     def parse(self) -> None:
+        """Parsing of the node tree from RPP file.
+
+        1. Reading the file.
+        2. Parsing it line by line.
+        3. Storing the parsed data in Node type
+
+        Returns:
+            Node: head of the tree
+        """
         print(f"Processing file: ... {self.filepath}")
 
         with open(self.filepath) as f:
