@@ -87,8 +87,8 @@ class ReaperProject:
                 elif not multiline_flag and re.search(self.PARAM_LINE_SINGLE_RGX, line):
                     if node_token == 'SWSAUTOCOLOR':
                         get_param = single_line_create_param(
-                            line, 
-                            line_idx, 
+                            line,
+                            line_idx,
                             self.PARAM_LINE_UUID_RGX,
                             ParameterType.SWSCOLOR_ID
                         )
@@ -96,8 +96,8 @@ class ReaperProject:
                         head.parameters.append(param)
                     else:
                         get_param = single_line_create_param(
-                            line, 
-                            line_idx, 
+                            line,
+                            line_idx,
                             self.PARAM_LINE_SINGLE_RGX
                         )
                         param = get_param()
@@ -107,7 +107,7 @@ class ReaperProject:
                         multiline_flag = True
                         param = Parameter(type=ParameterType.TEXT)
                     if param and multiline_flag:
-                        param.values.append(line)
+                        param.values.append(line.strip())
 
         return head
 
@@ -124,6 +124,6 @@ def single_line_create_param(line, line_idx, regexp, type_override=None):
             param = Parameter(type=ParameterType[match_res])
         if append:
             append(param, match_res)
-        param.values.append(line)
+        param.values.append(line.strip())
         return param
     return create_param
