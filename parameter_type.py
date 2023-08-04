@@ -2,9 +2,9 @@ from enum import Enum, unique, auto
 
 @unique
 class ParameterType(Enum):
-    
+
     TEXT = auto()
-    
+
     # Project
     RIPPLE = auto()
     GROUPOVERRIDE = auto()
@@ -30,7 +30,7 @@ class ParameterType(Enum):
     LOOP = auto()
     LOOPGRAN = auto()
     RECORD_PATH = auto()
-    
+
     RENDER_FILE = auto()
     RENDER_FMT = auto()
     RENDER_1X = auto()
@@ -40,7 +40,7 @@ class ParameterType(Enum):
     RENDER_STEMS = auto()
     RENDER_DITHER = auto()
     RENDER_PATTERN = auto()
-    
+
     TIMELOCKMODE = auto()
     TEMPOENVLOCKMODE = auto()
     ITEMMIX = auto()
@@ -48,7 +48,7 @@ class ParameterType(Enum):
     TAKELANE = auto()
     SAMPLERATE = auto()
     LOCK = auto()
-    
+
     GLOBAL_AUTO = auto()
     TEMPO = auto()
     PLAYRATE = auto()
@@ -65,7 +65,7 @@ class ParameterType(Enum):
     MASTER_FX = auto()
     MASTER_SEL = auto()
     MARKER = auto()
-    
+
     # ScreenSet
     POS = auto()
     MASK = auto()
@@ -74,27 +74,27 @@ class ParameterType(Enum):
     SCROLLY = auto()
     TRACKSCALE = auto()
     VZOOM = auto()
-    
+
     # Metronome
     VOL = auto()
     FREQ = auto()
     BEATLEN = auto()
     SAMPLES = auto()
     PATTERN = auto()
-    
+
     # Masterfxlist
     WNDRECT = auto()
     SHOW = auto()
     LASTSEL = auto()
     DOCKED = auto()
-    
+
     # POOLEDENV
     ID = auto()
     NAME = auto()
     SRCLEN = auto()
     LFO = auto()
     PPT = auto()
-    
+
     # MASTERPLAYSPEEDENV
     EGUID = auto()
     ACT = auto()
@@ -104,7 +104,7 @@ class ParameterType(Enum):
     DEFSHAPE = auto()
     POOLEDENVINST = auto()
     PT = auto()
-    
+
     # TRACK
     # NAME - 67
     PEAKCOL = auto()
@@ -130,16 +130,16 @@ class ParameterType(Enum):
     MIDIOUT = auto()
     MAINSEND = auto()
     FILE = auto()
-    
+
     # FX Chain
     BYPASS = auto()
     PRESETNAME = auto()
-    
+
     # VST
     FLOATPOS = auto()
     FXID = auto()
     WAK = auto()
-    
+
     # ITEM
     POSITION = auto()
     SNAPOFFS = auto()
@@ -154,7 +154,7 @@ class ParameterType(Enum):
     CHANMODE = auto()
     GUID = auto()
     RECPASS = auto()
-    
+
     # MIDI
     HASDATA = auto()
     CCINTERP = auto()
@@ -170,8 +170,8 @@ class ParameterType(Enum):
     TRACKSEL = auto()
     EVTFILTER = auto()
     CFGEDIT = auto()
-    
+
     # SWSCOLOR
     SWSCOLOR_ID = auto()
-    
+
     # list is not full. more will be coming soon
