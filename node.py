@@ -9,6 +9,7 @@ class Node:
         self.inner = []         # list of Nodes
         self.prev = None
         self.parameters = []    # list of Parameters
+        self.parameters_first_line = []
         self.depth = 0          # 0 = head, maximal value = distance of leaf
 
     def __str__(self) -> str:       
