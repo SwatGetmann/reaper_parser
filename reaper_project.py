@@ -9,6 +9,12 @@ class ReaperProject:
     Parser for *.rpp Reaper Project files.
     """
 
+    BLOCK_OPEN_RGX = r"\s*<([A-Z_]+)"
+    BLOCK_END_RGX = r"^\s*\>\n"
+
+    PARAM_LINE_SINGLE_RGX = r"\s+([A-Z0-9_]+)\s+"
+    PARAM_LINE_UUID_RGX = r"\s+(\{{1}[A-F0-9-]+\}{1})\s+"
+
     def __init__(self, filepath: str) -> None:
         self.filepath = filepath
         self.head = self.parse()
@@ -37,9 +43,6 @@ class ReaperProject:
 
         stack = []
 
-        open_block_r = r"\s*<([A-Z_]+)"
-        end_block_r = r"^\s*\>\n"
-
         node_token = None
 
         head = Node(ntype=NodeType.REAPER_PROJECT)
@@ -47,12 +50,10 @@ class ReaperProject:
 
         # TODO! : handle multiline parameters
         multiline_flag = False
-        single_line_param_r = r"\s+([A-Z0-9_]+)\s+"
-        uuid_line_param_r = r"\s+(\{{1}[A-F0-9-]+\}{1})\s+"
 
         for line_idx, line in enumerate(lines):
-            if re.match(open_block_r, line):
-                match = re.search(open_block_r, line)
+            if re.match(self.BLOCK_OPEN_RGX, line):
+                match = re.search(self.BLOCK_OPEN_RGX, line)
 
                 # print(line)
                 # print(match)
@@ -73,7 +74,7 @@ class ReaperProject:
 
                     # process line (header parameters) according to node.type
 
-            elif re.search(end_block_r, line):
+            elif re.search(self.BLOCK_END_RGX, line):
                 el_tag = stack.pop()
                 inner_level -= 1
 
@@ -98,12 +99,12 @@ class ReaperProject:
 
                 level_log_msg = f"L {inner_level+1} :: <{el_tag}>, {index_map[el_tag]} to {line_idx}"
                 print(level_log_msg)
-            elif not multiline_flag and re.search(single_line_param_r, line):
+            elif not multiline_flag and re.search(self.PARAM_LINE_SINGLE_RGX, line):
                 if node_token == 'SWSAUTOCOLOR':
                     get_param = single_line_create_param(
                         line, 
                         line_idx, 
-                        uuid_line_param_r,
+                        self.PARAM_LINE_UUID_RGX,
                         ParameterType.SWSCOLOR_ID
                     )
                     param = get_param(lambda p, m: p.values.append({'ID': m}))
@@ -112,7 +113,7 @@ class ReaperProject:
                     get_param = single_line_create_param(
                         line, 
                         line_idx, 
-                        single_line_param_r
+                        self.PARAM_LINE_SINGLE_RGX
                     )
                     param = get_param()
                     head.parameters.append(param)
