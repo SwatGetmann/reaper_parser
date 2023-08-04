@@ -16,7 +16,7 @@ class ReaperProject:
 
 
     def parse(self) -> None:
-        print("Processing file: ... {}".format(self.filepath))
+        print(f"Processing file: ... {self.filepath}")
 
         with open(self.filepath) as f:
             lines = f.readlines()
@@ -87,13 +87,10 @@ class ReaperProject:
 
                 # print(head)
 
-                print("Level: {} :: <{}>, {} to {}".format(
-                    inner_level+1, el_tag, index_map[el_tag], line_idx
-                ))
+                level_log_msg = f"L {inner_level+1} :: <{el_tag}>, {index_map[el_tag]} to {line_idx}"
+                print(level_log_msg)
             elif not multiline_flag and re.search(single_line_param_r, line):
                 if node_token == 'SWSAUTOCOLOR':
-                    print("PEEEP!")
-                    print(line)
                     get_param = single_line_create_param(
                         line, 
                         line_idx, 
@@ -124,7 +121,8 @@ def single_line_create_param(line, line_idx, regexp, type_override=None):
     def create_param(append=None):
         match = re.search(regexp, line)
         match_res = match.group(1)
-        print("[Line {}] :: Param Type Found: {}".format(line_idx, match_res))
+        log_msg = f"[Line {line_idx}] :: Param Type Found: {match_res}"
+        print(log_msg)
         if type_override:
             param = Parameter(type=type_override)
         else:
