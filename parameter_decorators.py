@@ -2,6 +2,8 @@ import re
 from typing import Pattern, Optional, Callable
 from parameter import Parameter
 from parameter_type import ParameterType
+from parser_utils import line_param_parsing
+
 
 def single_line_create_param(
     line: str,
@@ -29,6 +31,8 @@ def single_line_create_param(
             param = Parameter(type=ParameterType[match_res])
         if append:
             append(param, match_res)
-        param.values.append(line.strip())
+        param.lines.append(line.strip())
+        values = line_param_parsing(line, match_res, tag=False)
+        param.values += values
         return param
     return create_param

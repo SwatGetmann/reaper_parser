@@ -3,6 +3,7 @@ from typing import List
 from node import Node, NodeType
 from parameter import Parameter, ParameterType
 from parameter_decorators import single_line_create_param
+from parser_utils import line_param_parsing
 
 class ReaperProject:
     """
@@ -95,7 +96,7 @@ class ReaperProject:
                             self.PARAM_LINE_UUID_RGX,
                             ParameterType.SWSCOLOR_ID
                         )
-                        param = get_param(lambda p, m: p.values.append({'ID': m}))
+                        param = get_param(lambda p, m: p.lines.append({'ID': m}))
                         head.parameters.append(param)
                     else:
                         get_param = single_line_create_param(
@@ -110,47 +111,6 @@ class ReaperProject:
                         multiline_flag = True
                         param = Parameter(type=ParameterType.TEXT)
                     if param and multiline_flag:
-                        param.values.append(line.strip())
+                        param.lines.append(line.strip())
 
         return head
-
-
-def line_param_parsing(line: str, node_token: str) -> List[str]:
-    print(line)
-    line_split = line.split(f"<{node_token}")
-    line_params_str = line_split[1].strip()
-
-    line_str_stack = []
-    param_strs = []
-    l_pos = 0
-    r_pos = 0
-    for ci, c in enumerate(line_params_str):
-        if c == '"':
-            if len(line_str_stack) > 0:
-                r_pos = ci
-                line_str_stack.pop()
-                # print(f"FOUND A SS: {ci} :: {c} :: L {l_pos} , R {r_pos} ;; {line_params_str[l_pos:r_pos]}")
-                param_strs.append(line_params_str[l_pos:r_pos])
-                l_pos = ci+1
-                r_pos = ci+1
-            else:
-                l_pos = ci+1
-                r_pos = ci+1
-                line_str_stack.append(c)
-        elif c == " ":
-            if len(line_str_stack) > 0:
-                r_pos += 1
-            elif len(line_str_stack) == 0:
-                if l_pos < r_pos:
-                    # print(f"FOUND A WORD :: L {l_pos} , R {r_pos} ;; {line_params_str[l_pos:r_pos]}")
-                    param_strs.append(line_params_str[l_pos:r_pos])
-                l_pos = ci+1
-                r_pos = ci+1
-        else:
-            r_pos += 1
-        # print(f"{ci} :: {c} :: L {l_pos} , R {r_pos} ;; {line_params_str[l_pos:r_pos]}")
-    # dirty hack, but leave for now
-    if len(line_params_str) > 0 and len(param_strs) == 0:
-        param_strs.append(line_params_str)
-    print(param_strs)
-    return param_strs
