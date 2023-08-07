@@ -44,7 +44,7 @@ class ReaperProject:
 
         multiline_flag = False
 
-        with open(self.filepath) as f:
+        with open(self.filepath, 'r') as f:
             for line_idx, line in enumerate(f):
                 if re.match(self.BLOCK_OPEN_RGX, line):
                     match = re.search(self.BLOCK_OPEN_RGX, line)
