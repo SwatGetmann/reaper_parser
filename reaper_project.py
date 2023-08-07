@@ -2,7 +2,7 @@ import re
 
 from node import Node, NodeType
 from parameter import Parameter, ParameterType
-
+from parameter_decorators import single_line_create_param
 
 class ReaperProject:
     """
@@ -21,7 +21,7 @@ class ReaperProject:
         # self.head.print_tree()
 
 
-    def parse(self) -> None:
+    def parse(self) -> Node:
         """Parsing of the node tree from RPP file.
 
         1. Reading the file.
@@ -42,7 +42,6 @@ class ReaperProject:
         head = Node(ntype=NodeType.REAPER_PROJECT)
         prev = None
 
-        # TODO! : handle multiline parameters
         multiline_flag = False
 
         with open(self.filepath) as f:
@@ -148,21 +147,3 @@ class ReaperProject:
                         param.values.append(line.strip())
 
         return head
-
-
-def single_line_create_param(line, line_idx, regexp, type_override=None):
-    def create_param(append=None):
-        match = re.search(regexp, line)
-        match_res = match.group(1)
-        if match_res != 'E' and match_res != 'e':
-            log_msg = f"[Line {line_idx}] :: Param Type Found: {match_res}"
-            print(log_msg)
-        if type_override:
-            param = Parameter(type=type_override)
-        else:
-            param = Parameter(type=ParameterType[match_res])
-        if append:
-            append(param, match_res)
-        param.values.append(line.strip())
-        return param
-    return create_param
