@@ -16,10 +16,10 @@ parser.add_argument('--file_path',
 
 if __name__ == '__main__': 
     print("Welcome to Reaper Parser.")
-    
+
     args = parser.parse_args()
     print(args)
-    
+
     if args.file_path:
         rp = ReaperProject(args.file_path)
         # rp.head.print_tree()
