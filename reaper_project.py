@@ -19,12 +19,6 @@ class ReaperProject:
     def __init__(self, filepath: str) -> None:
         self.filepath = filepath
         self.head = self.parse()
-        fetch_res = self.head.fetch(NodeType.VST, [])
-        for res in fetch_res:
-            res.print_tree()
-            
-        # self.head.print_tree()
-
 
     def parse(self) -> Node:
         """Parsing of the node tree from RPP file.
