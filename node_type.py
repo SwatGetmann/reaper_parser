@@ -30,6 +30,9 @@ class NodeType(Enum):
     SLOT = auto()
     BR_CURSOR_POS = auto()
     PANENV = auto()
+    PANENV2 = auto()
     JS = auto()
+    VOLENV = auto()
+    VOLENV2 = auto()
 
     # list is not full. more will be coming soon

@@ -177,4 +177,14 @@ class ParameterType(Enum):
     # MULTILINE - custom stub
     MULTILINE = auto()
 
+    COLOR = auto()
+    AUXRECV = auto()
+    VOLTYPE = auto()
+    Em = auto()
+    em = auto()
+
+    TAKECOLOR = auto()
+    TAKE = auto()
+    TAKEVOLPAN = auto()
+
     # list is not full. more will be coming soon
