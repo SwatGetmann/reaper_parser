@@ -26,6 +26,12 @@ class Node:
             n.print_tree()
     
     def fetch(self, node_type: NodeType, collection: list) -> List['Node']:
+        """Searches and provides a list of Nodes for a given NodeType.
+
+        Returns:
+            List[Node]: List of Nodes with a desired Node Type. \
+                Can be empty.
+        """
         if self.type == node_type:
             collection.append(self)
         if self.inner:
