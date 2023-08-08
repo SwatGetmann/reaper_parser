@@ -1,7 +1,13 @@
 from typing import List
 
-def line_param_parsing(line: str, node_token: str, tag: bool = True) -> List[str]:
-    print(line)
+def line_param_parsing(
+    line: str, 
+    node_token: str, 
+    tag: bool = True,
+    debug_log: bool = False
+) -> List[str]:
+    if debug_log:
+        print(line)
     if tag:
         line_split = line.split(f"<{node_token}")
     else:
@@ -44,5 +50,6 @@ def line_param_parsing(line: str, node_token: str, tag: bool = True) -> List[str
     # dirty hack, but leave for now
     if len(line_params_str) > 0 and len(param_strs) == 0:
         param_strs.append(line_params_str)
-    print(param_strs)
+    if debug_log:
+        print(param_strs)
     return param_strs

@@ -9,7 +9,9 @@ def single_line_create_param(
     line: str,
     line_idx: int,
     regexp: Pattern[str],
-    type_override: Optional[str] = None) -> Callable:
+    type_override: Optional[str] = None,
+    debug_log: bool = False
+) -> Callable:
     """Generator for single line parameters.
 
     Args:
@@ -22,9 +24,10 @@ def single_line_create_param(
     def create_param(append=None):
         match = re.search(regexp, line)
         match_res = match.group(1)
-        if match_res != 'E' and match_res != 'e':
-            log_msg = f"[Line {line_idx}] :: Param Type Found: {match_res}"
-            print(log_msg)
+        if debug_log:
+            if match_res != 'E' and match_res != 'e':
+                log_msg = f"[Line {line_idx}] :: Param Type Found: {match_res}"
+                print(log_msg)
         if type_override:
             param = Parameter(type=type_override)
         else:

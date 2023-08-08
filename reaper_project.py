@@ -16,8 +16,9 @@ class ReaperProject:
     PARAM_LINE_SINGLE_RGX = r"\s+([A-Ze0-9_]+)\s+"
     PARAM_LINE_UUID_RGX = r"\s+(\{{1}[A-F0-9-]+\}{1})\s+"
 
-    def __init__(self, filepath: str) -> None:
+    def __init__(self, filepath: str, debug_log: bool = False) -> None:
         self.filepath = filepath
+        self.debug_log = debug_log
         self.head = self.parse()
 
     def parse(self) -> Node:
@@ -30,7 +31,8 @@ class ReaperProject:
         Returns:
             Node: head of the tree
         """
-        print(f"Processing file: ... {self.filepath}")
+        if self.debug_log:
+            print(f"Processing file: ... {self.filepath}")
 
         index_map = {}
         stack = []
@@ -61,7 +63,11 @@ class ReaperProject:
                         head.depth = inner_level - 1
 
                     # process line (header parameters) according to node.type
-                    param_strs = line_param_parsing(line, node_token)
+                    param_strs = line_param_parsing(
+                        line, 
+                        node_token, 
+                        debug_log=self.debug_log
+                    )
                     head.parameters_first_line = param_strs
 
                 elif re.search(self.BLOCK_END_RGX, line):
@@ -83,16 +89,17 @@ class ReaperProject:
                         head.inner.append(curr)
                         node_token = stack[-1]
 
-                    level_log_msg = f"L {inner_level+1} :: <{closed_node_token}>, {index_map[closed_node_token]} to {line_idx}"
-                    print(level_log_msg)
+                    if self.debug_log:
+                        level_log_msg = f"L {inner_level+1} :: <{closed_node_token}>, {index_map[closed_node_token]} to {line_idx}"
+                        print(level_log_msg)
                 elif not multiline_flag and re.search(self.PARAM_LINE_SINGLE_RGX, line):
-                    # TODO: actually, we can use #line_param_parsing on sinlge lines to get param values instead of archiving the full string
                     if node_token == 'SWSAUTOCOLOR':
                         get_param = single_line_create_param(
                             line,
                             line_idx,
                             self.PARAM_LINE_UUID_RGX,
-                            ParameterType.SWSCOLOR_ID
+                            ParameterType.SWSCOLOR_ID,
+                            debug_log=self.debug_log
                         )
                         param = get_param(lambda p, m: p.lines.append({'ID': m}))
                         head.parameters.append(param)
@@ -100,7 +107,8 @@ class ReaperProject:
                         get_param = single_line_create_param(
                             line,
                             line_idx,
-                            self.PARAM_LINE_SINGLE_RGX
+                            self.PARAM_LINE_SINGLE_RGX,
+                            debug_log=self.debug_log
                         )
                         param = get_param()
                         head.parameters.append(param)
