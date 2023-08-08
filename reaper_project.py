@@ -47,6 +47,7 @@ class ReaperProject:
 
         with open(self.filepath, 'r') as f:
             for line_idx, line in enumerate(f):
+                # print(f"[{line_idx}] MULTILINE FLAG: {multiline_flag}")
                 if re.match(self.BLOCK_OPEN_RGX, line):
                     match = re.search(self.BLOCK_OPEN_RGX, line)
 
@@ -69,6 +70,11 @@ class ReaperProject:
                         debug_log=self.debug_log
                     )
                     head.parameters_first_line = param_strs
+                    
+                    if node_token == 'NOTES':
+                        print("YO")
+                        multiline_flag = True
+                        param = Parameter(type=ParameterType.MULTILINE)
 
                 elif re.search(self.BLOCK_END_RGX, line):
                     closed_node_token = stack.pop()

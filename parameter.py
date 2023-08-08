@@ -10,8 +10,7 @@ class Parameter:
 
     def __str__(self) -> str:
         if self.type == ParameterType.MULTILINE:
-            concat = "".join(self.lines[0])
-            concat_b64 = base64.b64decode(concat)
-            return "{} : {}".format(self.type, concat_b64)
+            concat = "\n".join(self.lines)
+            return "{} : {}".format(self.type, concat)
         else:
             return "{} : {}".format(self.type, self.lines)
