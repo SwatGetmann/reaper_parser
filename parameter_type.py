@@ -174,4 +174,7 @@ class ParameterType(Enum):
     # SWSCOLOR
     SWSCOLOR_ID = auto()
 
+    # MULTILINE - custom stub
+    MULTILINE = auto()
+
     # list is not full. more will be coming soon
