@@ -4,7 +4,6 @@ from node_type import NodeType
 
 class Node:
     """Class represents a Node from a Reaper Project File tree."""
-
     def __init__(self, ntype: NodeType) -> None:
         self.type = ntype
         self.inner = []         # list of Nodes
@@ -13,7 +12,7 @@ class Node:
         self.parameters_first_line = []
         self.depth = 0          # 0 = head, maximal value = distance of leaf
 
-    def __str__(self) -> str:       
+    def __str__(self) -> str:
         return f"{self.prev} -> {self.type}.[{len(self.inner)} /{self.depth}]"
 
     def print_tree(self) -> None:
@@ -24,7 +23,7 @@ class Node:
             print(p)
         for n in self.inner:
             n.print_tree()
-    
+
     def fetch(self, node_type: NodeType, collection: list) -> List['Node']:
         """Searches and provides a list of Nodes for a given NodeType.
 
