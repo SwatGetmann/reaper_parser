@@ -19,6 +19,10 @@ class ReaperProject:
     def __init__(self, filepath: str) -> None:
         self.filepath = filepath
         self.head = self.parse()
+        fetch_res = self.head.fetch(NodeType.VST, [])
+        for res in fetch_res:
+            res.print_tree()
+            
         # self.head.print_tree()
 
 
@@ -109,7 +113,7 @@ class ReaperProject:
                 else:
                     if not multiline_flag:
                         multiline_flag = True
-                        param = Parameter(type=ParameterType.TEXT)
+                        param = Parameter(type=ParameterType.MULTILINE)
                     if param and multiline_flag:
                         param.lines.append(line.strip())
 
