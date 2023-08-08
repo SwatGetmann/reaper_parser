@@ -1,3 +1,4 @@
+from typing import List
 from node_type import NodeType
 
 
@@ -18,7 +19,16 @@ class Node:
     def print_tree(self) -> None:
         """Prints node tree, starting from itself as the main node"""
         print(self)
+        print(self.parameters_first_line)
         for p in self.parameters:
             print(p)
         for n in self.inner:
             n.print_tree()
+    
+    def fetch(self, node_type: NodeType, collection: list) -> List['Node']:
+        if self.type == node_type:
+            collection.append(self)
+        if self.inner:
+            for i in self.inner:
+                i.fetch(node_type, collection)
+        return collection
