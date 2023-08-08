@@ -70,9 +70,8 @@ class ReaperProject:
                         debug_log=self.debug_log
                     )
                     head.parameters_first_line = param_strs
-                    
+
                     if node_token == 'NOTES':
-                        print("YO")
                         multiline_flag = True
                         param = Parameter(type=ParameterType.MULTILINE)
 
