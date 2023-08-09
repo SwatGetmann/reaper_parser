@@ -71,7 +71,7 @@ class ReaperProject:
                     )
                     head.parameters_first_line = param_strs
 
-                    if node_token == 'NOTES':
+                    if node_token == 'NOTES' or node_token == 'JS':
                         multiline_flag = True
                         param = Parameter(type=ParameterType.MULTILINE)
 
