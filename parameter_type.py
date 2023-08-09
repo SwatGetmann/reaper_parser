@@ -186,5 +186,7 @@ class ParameterType(Enum):
     TAKECOLOR = auto()
     TAKE = auto()
     TAKEVOLPAN = auto()
+    
+    FLOAT = auto()
 
     # list is not full. more will be coming soon
