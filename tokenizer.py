@@ -1,37 +1,52 @@
-def tokenize(file_path: str) -> None:
-    """Tokenizer for Reaper Project files.
-    Draft.
+class Node:
+    """Class represents a Node from a Reaper Project File tree."""
+    def __init__(self, name: str) -> None:
+        self.nodes = []
+        self.inner = []
+        self.prev = None
+        self.depth = 0
+        self.name = name
+    
+    def __str__(self) -> str:
+        return f"{self.prev} -> {self.name}.[D:{self.depth} N:{len(self.nodes)} I:{len(self.inner)}]"
 
-    Args:
-        file_path (_type_): path to RPP file.
+    def print_tree(self) -> None:
+        """Prints node tree, starting from itself as the main node"""
+        print(self)
+        for n in self.nodes:
+            n.print_tree()
+            
+    def add_node(self, node: 'Node') -> None:
+        node.prev = self
+        node.depth = self.depth + 1
+        self.nodes.append(node)
 
-    Returns:
-        None
-    """
-    depth = 0
+def tokenize_node(stream):
     line_type = None
-    node_stack = []
-
+    node_curr = None
+    
+    lens = [len(l) for l in stream]
+    max_line_len = max(lens)
+    
     def context_msg():
-        node_cur = None
-        node_prev = None
-        if node_stack:
-            node_cur = node_stack[-1]
-            if len(node_stack) > 1:
-                node_prev = node_stack[-2]
-        return f"{{{depth:2}}} : {str(line_type).ljust(10)} : {str(node_prev).ljust(15)} -> {str(node_cur).ljust(15)} | {node_stack}"
+        if node_curr:
+            depth = node_curr.depth + 1
+        else:
+            depth = 0
+        return f"{{{depth:2}}} : {str(line_type).ljust(10)} : {str(node_curr)}"
 
-    with open(file_path, 'r') as f:
-        for lidx, line in enumerate(f):
-            if line.lstrip()[0] == '<':
-                depth += 1
-                node = line.lstrip()[1:].split(" ")[0].rstrip()
-                node_stack.append(node)
-                line_type = 'TAG_OPEN'
-            elif line.lstrip()[0] == '>':
-                depth -= 1
-                line_type = 'TAG_CLOSE'
-                node_stack.pop()
-            else:
-                line_type = 'TAG_INNER'
-            print(f"[{lidx:4}]: {line.rstrip().ljust(140)} | {context_msg()}")
+    for lidx, line in enumerate(stream):
+        if line.lstrip()[0] == '<':
+            node_name = line.lstrip()[1:].split(" ")[0].rstrip()
+            node = Node(node_name)
+            if node_curr:
+                node_curr.add_node(node)
+            node_curr = node
+            line_type = 'TAG_OPEN'
+        elif line.lstrip()[0] == '>':
+            line_type = 'TAG_CLOSE'
+            node_curr = node_curr.prev
+        else:
+            line_type = 'TAG_INNER'
+            node_curr.inner.append(line.strip())
+        print(f"[{lidx:4}]: {line.rstrip().ljust(max_line_len)} | {context_msg()}")
