@@ -20,6 +20,15 @@ class Node:
         node.prev = self
         node.depth = self.depth + 1
         self.nodes.append(node)
+    
+    def save_str_tree(self) -> str:
+        lines = [f"{' ' * self.depth * 2}<{self.name}"]
+        for i in self.inner:
+            lines += [f"{' ' * (self.depth+1) * 2}{i}"]
+        for n in self.nodes:
+            lines += n.save_str_tree()
+        lines.append(f"{' ' * self.depth * 2}>")
+        return lines
 
 def tokenize_node(stream):
     line_type = None
