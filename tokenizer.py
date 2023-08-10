@@ -3,6 +3,7 @@ from typing import List
 class Node:
     """Class represents a Node from a Reaper Project File tree."""
     def __init__(self, name: str) -> None:
+        self.indexes = []
         self.nodes = []
         self.inner = []
         self.first_line = None
@@ -23,6 +24,11 @@ class Node:
         node.prev = self
         node.depth = self.depth + 1
         self.nodes.append(node)
+        self.indexes.append(1)
+        
+    def add_inner(self, line: str) -> None:
+        self.inner.append(line)
+        self.indexes.append(0)
         
     def fetch_nodes(self, name: str, collection: list = []) -> List['Node']:
         if self.name == name:
@@ -38,10 +44,18 @@ class Node:
             lines.append(f"{' ' * self.depth * 2}<{self.first_line}")
         else:
             lines.append(f"{' ' * self.depth * 2}<{self.name}")
-        for i in self.inner:
-            lines += [f"{' ' * (self.depth+1) * 2}{i}"]
-        for n in self.nodes:
-            lines += n.save_str_tree()
+        
+        inner_idx = 0
+        nodex_idx = 0
+        for index in self.indexes:
+            if index == 0:
+                lines += [f"{' ' * (self.depth+1) * 2}{self.inner[inner_idx]}"]
+                inner_idx += 1
+            elif index == 1:
+                lines += self.nodes[nodex_idx].save_str_tree()
+                nodex_idx += 1
+            else:
+                raise "WTF"
         lines.append(f"{' ' * self.depth * 2}>")
         return lines
 
@@ -81,7 +95,7 @@ def tokenize_node(stream) -> List[Node]:
             node_curr = node_curr.prev
         else:
             line_type = 'TAG_INNER'
-            node_curr.inner.append(line.strip())
+            node_curr.add_inner(line.strip())
         print(f"[{lidx:4}]: {line.rstrip().ljust(max_line_len)} | {context_msg()}")
     
     return heads
