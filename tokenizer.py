@@ -42,6 +42,15 @@ class Node:
                 i.fetch_nodes(name, collection)
         return collection
     
+    def fetch_inner(self, name: str, collection: list = []) -> List[str]:
+        for el in self.inner:
+            if name in el:
+                collection.append(el)
+        if self.nodes:
+            for i in self.nodes:
+                i.fetch_inner(name, collection)
+        return collection
+    
     def save_str_tree(self) -> str:
         lines = []
         if self.first_line:
