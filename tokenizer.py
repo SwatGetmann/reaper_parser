@@ -1,5 +1,9 @@
 from typing import List
 
+class WrongTreeIndexError(ValueError):
+    def __init__(self):
+        super().__init__("You can't use indecies other than 1 or 0")
+
 class Node:
     """Class represents a Node from a Reaper Project File tree."""
     def __init__(self, name: str) -> None:
@@ -55,7 +59,7 @@ class Node:
                 lines += self.nodes[nodex_idx].save_str_tree()
                 nodex_idx += 1
             else:
-                raise "WTF"
+                raise WrongTreeIndexError()
         lines.append(f"{' ' * self.depth * 2}>")
         return lines
 
