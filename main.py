@@ -24,12 +24,5 @@ if __name__ == '__main__':
     if args.file_path:
         rps = tokenize_node(open(args.file_path, 'r').readlines(), supress_output=args.debug)
         rps[0].print_tree()
-        # fetch_res = rp.head.fetch(NodeType.VST, [])
-        # for res in fetch_res:
-        #     res.print_tree()
-        
-        # fetch_res = rp.head.fetch(NodeType.NOTES, [])
-        # for res in fetch_res:
-        #     res.print_tree()
     else:
         print("No file path had been given.")
