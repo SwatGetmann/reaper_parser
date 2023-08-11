@@ -64,7 +64,7 @@ class Node:
         return lines
 
 
-def tokenize_node(stream) -> List[Node]:
+def tokenize_node(stream, supress_output: False) -> List[Node]:
     line_type = None
     node_curr = None
     
@@ -100,6 +100,7 @@ def tokenize_node(stream) -> List[Node]:
         else:
             line_type = 'TAG_INNER'
             node_curr.add_inner(line.strip())
-        print(f"[{lidx:4}]: {line.rstrip().ljust(max_line_len)} | {context_msg()}")
+        if not supress_output:
+            print(f"[{lidx:4}]: {line.rstrip().ljust(max_line_len)} | {context_msg()}")
     
     return heads
